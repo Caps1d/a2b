@@ -48,7 +48,7 @@ class Queue[Element]:
 GridLocation = tuple[int, int]
 
 class SquareGrid(Graph[GridLocation]):
-    def __init__(self, width: int, height: int) -> None:
+    def __init__(self, width: int, height: int):
         self.width = width
         self.height = height
         self.walls: list[GridLocation] = []
@@ -66,14 +66,22 @@ class SquareGrid(Graph[GridLocation]):
         # see "Ugly paths" section for an explanation (https://www.redblobgames.com/pathfinding/a-star/implementation.html#troubleshooting-ugly-path):
         if (x + y) % 2 == 0: neighbors.reverse() # S N W E
         results = filter(self.in_bounds, neighbors)
-        results = list(filter(self.passable, results))
-        return results
+        results = filter(self.passable, results)
+        return list(results)
 
     def draw_grid(self) -> str:
-        y = 0
+        x, y = 0, 0
+
         grid = ""
+        cols = "  "
+
+        while x < self.width:
+            cols += f"{x}  " 
+            x += 1
+        grid += cols + "\n"
+
         while y < self.height: 
-            row = ""
+            row = f"{y}"
             x = 0
             while x < self.width:
                 loc: GridLocation = (x, y)
@@ -84,7 +92,9 @@ class SquareGrid(Graph[GridLocation]):
                 x += 1
             grid += row + "\n"
             y += 1
+
         return grid
+
 
 
 class WeightedGraph[Location](Graph[Location], Protocol):
