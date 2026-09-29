@@ -73,7 +73,7 @@ class SquareGrid(Graph[GridLocation]):
         x, y = 0, 0
 
         grid = ""
-        cols = "  "
+        cols = " "
 
         while x < self.width:
             cols += f"{x}  " 
@@ -94,6 +94,65 @@ class SquareGrid(Graph[GridLocation]):
             y += 1
 
         return grid
+
+    # refactor: can we extract the drawing logic to avoid duplication?
+    def draw_grid_with_path(self, path: list[tuple]) -> str: 
+        goal = path[0]
+        x, y = 0, 0
+
+        grid = ""
+        cols = " "
+
+        while x < self.width:
+            cols += f"{x}  " 
+            x += 1
+        grid += cols + "\n"
+
+        # create Location to direction map  
+        directions: dict[tuple[Location], str] = {}
+
+
+        for i in range(len(path)-1, 0, -1):
+            current = path[i]
+
+            next = path[i-1]
+
+            delta_x = next[0] - current[0]
+            delta_y = next[1] - current[1]
+
+            #left 
+            if delta_x < 0:
+                directions[current] = " ← "
+            #right
+            if delta_x > 0:
+                directions[current] = " → "
+            #up
+            if delta_y < 0:
+                directions[current] = " ↑ "
+            #down
+            if delta_y > 0: 
+                directions[current] = " ↓ "
+
+
+        while y < self.height: 
+            row = f"{y}"
+            x = 0
+            while x < self.width:
+                loc: GridLocation = (x, y)
+
+                if loc in directions:
+                    row += directions[loc]
+                elif not self.passable(loc):
+                    row += " # "
+                else:
+                    row += " * "
+                x += 1
+
+            grid += row + "\n"
+            y += 1
+
+        return grid
+
 
 
 

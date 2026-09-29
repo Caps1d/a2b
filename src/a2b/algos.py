@@ -2,7 +2,7 @@ import math
 import heapq
 from typing import Dict
 
-from a2b.data_structures import Graph, GridLocation, WeightedGraph
+from a2b.data_structures import WeightedGraph
 
 
 class A_Star:
@@ -86,13 +86,3 @@ class A_Star:
     def zero_distance(self, start: Location, goal: Location):
         return 0
 
-
-# class node:
-#     x = 0
-#     y = 0
-#
-#     def __init__(self, x, y):
-#         self.x = x
-#         self.y = y
-#
-#

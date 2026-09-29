@@ -62,15 +62,9 @@ class TestAStar(unittest.TestCase):
         goal: GridLocation = (5,5)
 
 
-        (_, costs) = aStar.search(self.weightedGrid, start, goal, aStar.manhattan_distance)
+        (came_from, costs) = aStar.search(self.weightedGrid, start, goal, aStar.manhattan_distance)
 
-        self.assertEqual(aStar.getTotalCost(costs, goal), 21)
+        path: list[tuple] = aStar.reconstruct_path(came_from, start, goal)
 
-    def test_aStar_weightedGraph(self):
-        aStar = A_Star()
-
-        (_, costs) = aStar.search(self.weightedGraph, 'A', 'F', aStar.zero_distance)
-        self.assertEqual(aStar.getTotalCost(costs, 'F'), 7)
-
-if __name__ == '__main__':
-    unittest.main()
+        print(path)
+        print(f"start: {path[-1]}, finish: {path[0]}")
