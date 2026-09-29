@@ -1,5 +1,6 @@
 import math
 import heapq
+from typing import Dict
 
 from a2b.data_structures import Graph, GridLocation, WeightedGraph
 
@@ -56,6 +57,9 @@ class A_Star:
 
         return came_from, cost_so_far
 
+    def getTotalCost(self, costs: dict[Location, float], goal: Location):
+        return costs[goal]
+
 
 
 
@@ -74,6 +78,13 @@ class A_Star:
         (x1, y1) = start
         (x2, y2) = goal
         return abs(x1 - x2) + abs(y1 - y2)
+
+    # def triangle_inequality(self, wG: WeightedGraph, start: Location, goal: Location, landmark: Location):
+    #     delta_start = wG.weights[(start, landmark)]
+    #     delta_goal= wG.weights[(start, landmark)]
+
+    def zero_distance(self, start: Location, goal: Location):
+        return 0
 
 
 # class node:

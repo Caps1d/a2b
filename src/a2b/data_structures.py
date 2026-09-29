@@ -107,3 +107,16 @@ class GridWithWeights(SquareGrid):
 
     def cost(self, from_node: GridLocation, to_node: GridLocation) -> float: 
         return self.weights.get(to_node, 1) #1 is the default value in case to_node isn't a key
+
+Edge = tuple[str, str]
+
+class GraphWithWeights(SimpleGraph):
+    def __init__(self) -> None:
+        super().__init__()
+        self.weights: dict[Edge, float] = {}
+        # self.node_positions: dict[Edge, tuple[int, int]]
+
+    def cost(self, from_node: Location, to_node: Location) -> float:
+        edge: Edge = (from_node, to_node)
+        return self.weights.get(edge, 1)
+
